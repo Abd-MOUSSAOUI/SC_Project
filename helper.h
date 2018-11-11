@@ -24,8 +24,6 @@
 #define SEM_CAPACITY 2
 #define SEM_INSIDE 3
 
-#define CODE_ERREUR 1
-
 char *prog;
 
 // SEMOP construit la structure à la volée, et vérifie le code de retour.
@@ -44,15 +42,10 @@ char *prog;
 
 //Niveau de chaque type de log.
 #define LEVEL_FATAL 0
-#define COLOR_FATAL "\x1b[1;35;7m" // Magenta
 #define LEVEL_ERROR 1
-#define COLOR_ERROR "\x1b[1;31;7m" // Red
 #define LEVEL_WARN 1
-#define COLOR_WARN "\x1b[1;33;7m" // Yellow
 #define LEVEL_INFO 1
-#define COLOR_INFO "\x1b[1;32;7m" // Green
 #define LEVEL_DEBUG 2
-#define COLOR_DEBUG "\x1b[1;36;7m" // Cyan
 
 // Macros pour log.
 #define FATAL(MSG) LOG(FATAL, MSG "\n")
@@ -66,21 +59,16 @@ char *prog;
 #define DEBUG(MSG) LOG(DEBUG, MSG "\n")
 #define DEBUGF(MSG, ...) LOG(DEBUG, MSG "\n", __VA_ARGS__)
 
-// Double expansion technique to convert __LINE__ into string literal
+// To convert __LINE__ into string literal
 #define S(x) #x
 #define S_(x) S(x)
 
-// Compiler avec '-DNO_COLOR' pour désactiver les couleurs.
-#ifdef NO_COLOR
+
 #define LEVEL_FMT(LEVEL) #LEVEL
 #define LOC_FMT __FILE__ ":" S_(__LINE__)
-#else
-#define LEVEL_FMT(LEVEL) COLOR_##LEVEL " " #LEVEL " \x1b[0m"
-#define LOC_FMT "\x1b[90m" __FILE__ ":" S_(__LINE__) "\x1b[0m"
-#endif
 
-// Macro interne pour formatter un message de logs (en couleur), avec
-// [niveau] [fichier]:[ligne] [message]
+// Macro pour formatter un message de logs, avec [niveau] 
+//[fichier]:[ligne] [message]
 #define LOG_FMT(LEVEL, ...) LEVEL_FMT(LEVEL) "\t" LOC_FMT "\t" __VA_ARGS__
 #define LOG(LEVEL, ...)                                   \
     {                                                     \
@@ -101,20 +89,30 @@ int create_shared_memory(void);
 
 int get_shared_memory_id(void);
 
-void delete_shared_memory_id(void);
+void delete_shared_memory(void);
 
 int create_semaphore(void);
 
 int get_semaphore_id(void);
 
+void delete_semaphore(void);
+
 int get_semaphore_value(int semid, unsigned short which);
 
 void set_semaphore_value(int semid, unsigned short which, unsigned short value);
 
+
+
 struct port
 {
     int number_of_dock;
-    char boat_name;
+    char name;
+    int number_of_container;
+    int time_of_docking;
+    int time_to_discharge_a_container;
+    bool dock; //true s'il est à quai false sinon
+    int number_of_boat_dock; // numéro de quai ou il est accosté
 };
+
 
 #endif
