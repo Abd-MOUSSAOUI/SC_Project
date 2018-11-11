@@ -11,54 +11,39 @@
 noreturn void usage(void)
 {
     fprintf(stderr, "Usage: %s [v] [c] [ta] [td] (v=nom, c=nbr de conts, ta=tmps d’accostage, td=tmps de dechargement d'une cont \n", prog);
-    exit(CODE_ERREUR);
+    exit(EXIT_FAILURE);
 }
 
 noreturn void error(char *c)
 {
     perror(c);
-    exit(CODE_ERREUR);
+    exit(EXIT_FAILURE);
 }
 
-void pnav()
+void create_port(char v, int c, int ta, int td)
 {
-    int shmid;
-    key_t key = 5678;
-    char *shm, *s;
-
-    //Locate the segment.
-    if ((shmid = shmget(key, SHMSZ, 0666)) < 0)
-        error("shmget");
-
-    
-    //Now we attach the segment to our data space.
-    if ((shm = shmat(shmid, NULL, 0)) == (char *)-1)
-        error("shmat");
-
-    
-    //Now read what the server put in the memory.
-    
-    for (s = shm; *s != NULL; s++)
-        putchar(*s);
-    putchar('\n');
-
-    /*
-     * Finally, change the first character of the
-     * segment to '*', indicating we have read
-     * the segment.
-     */
-    *shm = '*';
-    exit(0);
+    struct port *p = get_port(get_shared_memory_id(), false);
+    p->name=v;
+    p->number_of_container=c;
+    p->time_of_docking=ta;
+    p->time_to_discharge_a_container=td;
 }
 
 int main(int argc, char *argv[])
 {
-    int n;
     prog = argv[0];
     if (argc != 5)
         usage();
-    n = atoi(argv[1]);
-    if (n <= 0)
+
+    int c, ta, td;
+    char v;
+    v = argv[1][1];
+    c = atoi(argv[2]);
+    ta = atoi(argv[3]);
+    td = atoi(argv[4]);
+
+    if (c <= 0 || ta < 0 || td < 0)
         usage();
+    create_port(v, c, ta, td);
     return 0;
 }

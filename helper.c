@@ -11,7 +11,7 @@
 noreturn void error(char *c)
 {
     perror(c);
-    exit(CODE_ERREUR);
+    exit(EXIT_FAILURE);
 }
 
 int get_log_level(void)
@@ -72,7 +72,7 @@ int get_shared_memory_id(void)
     return shmid;
 }
 
-void delete_shared_memory_id(void)
+void delete_shared_memory(void)
 {
     int shmid = get_shared_memory_id();
     if (shmctl(shmid, IPC_RMID, NULL) == -1)

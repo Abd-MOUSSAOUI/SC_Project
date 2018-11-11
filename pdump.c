@@ -11,13 +11,13 @@
 noreturn void usage(void)
 {
     fprintf(stderr, "Usage: %s\n", prog);
-    exit(CODE_ERREUR);
+    exit(EXIT_FAILURE);
 }
 
 noreturn void error(char *c)
 {
     perror(c);
-    exit(CODE_ERREUR);
+    exit(EXIT_FAILURE);
 }
 
 int main(int argc, char *argv[])
@@ -35,9 +35,9 @@ int main(int argc, char *argv[])
     closed = get_semaphore_value(semid, SEM_CLOSED);
 
     INFOF(" Capacité max.: %d", p->number_of_dock );
-    INFOF("        bateau: %d", p->boat_name);
-    INFOF("  État du port: %s", closed ? "fermé" : "ouvert");
-    INFOF("Capa. actuelle: %d", cur_capacite);
-    INFOF("    En attente: %d", waiting);
+    INFOF(" Bateau: %c", p->name);
+    INFOF(" État du bateau: %s", p->dock ? "à quai" : "en attente");
+    INFOF(" Nbr de conteneur: %d", p->number_of_container);
+    INFOF(" Bateaux en attente: %d", waiting);
     INFOF(" À l'intérieur: %d", inside);
 }
