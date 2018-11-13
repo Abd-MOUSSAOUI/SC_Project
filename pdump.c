@@ -6,7 +6,7 @@
 //  Copyright © 2018 MOUSSAOUI. All rights reserved.
 //
 #define LOG_LEVEL 5
-#include "helper.h"
+#include "port.h"
 
 noreturn void usage(void)
 {
@@ -32,11 +32,12 @@ int main(int argc, char *argv[])
     if( (waiting = semctl(semid, SEM_CAPACITY, GETNCNT)) == -1) error("semctl");
     cur_capacite = get_semaphore_value(semid, SEM_CAPACITY);
     inside = get_semaphore_value(semid, SEM_INSIDE);
-    closed = get_semaphore_value(semid, SEM_CLOSED);
+    //closed = get_semaphore_value(semid, SEM_CLOSED);
 
-    INFOF(" Capacité max.: %d", p->number_of_dock );
+    INFOF(" Capacité max.: %d", p->capacity);
+    INFOF(" Numéro de quai : %d", p->number_of_dock);
     INFOF(" Bateau: %c", p->name);
-    INFOF(" État du bateau: %s", p->dock ? "à quai" : "en attente");
+    INFOF(" État du bateau: %s", (p->dock ? "à quai" : "en attente"));
     INFOF(" Nbr de conteneur: %d", p->number_of_container);
     INFOF(" Bateaux en attente: %d", waiting);
     INFOF(" À l'intérieur: %d", inside);

@@ -6,7 +6,7 @@
 //  Copyright © 2018 MOUSSAOUI. All rights reserved.
 //
 
-#include "helper.h"
+#include "port.h"
 
 noreturn void usage(void)
 {
@@ -20,13 +20,14 @@ noreturn void error(char *c)
     exit(EXIT_FAILURE);
 }
 
-void create_port(char v, int c, int ta, int td)
+void create_navire(char v, int c, int ta, int td)
 {
     struct port *p = get_port(get_shared_memory_id(), false);
     p->name=v;
     p->number_of_container=c;
     p->time_of_docking=ta;
     p->time_to_discharge_a_container=td;
+    p->dock=0;
 }
 
 int main(int argc, char *argv[])
@@ -44,6 +45,6 @@ int main(int argc, char *argv[])
 
     if (c <= 0 || ta < 0 || td < 0)
         usage();
-    create_port(v, c, ta, td);
+    create_navire(v, c, ta, td);
     return 0;
 }
