@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     if( (waiting = semctl(semid, SEM_CAPACITY, GETNCNT)) == -1) error("semctl");
     cur_capacite = get_semaphore_value(semid, SEM_CAPACITY);
     inside = get_semaphore_value(semid, SEM_INSIDE);
-    //closed = get_semaphore_value(semid, SEM_CLOSED);
+    closed = get_semaphore_value(semid, SEM_CLOSED);
 
     INFOF(" Capacité max.: %d", p->capacity);
     INFOF(" Numéro de quai : %d", p->number_of_dock);

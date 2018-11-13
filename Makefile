@@ -67,3 +67,4 @@ clean:
 	rm -f *.gc*
 	rm -f *.log
 	rm -f tags core
+	rm -rf *.dSYM
