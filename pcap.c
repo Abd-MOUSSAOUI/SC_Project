@@ -10,7 +10,7 @@
 
 noreturn void usage(void)
 {
-    fprintf(stderr, "Usage: %s n (avec n>0 nombre de quais)\n", prog);
+    fprintf(stderr, "usage: %s n (avec n>0 nombre de quais)\n", prog);
     exit(EXIT_FAILURE);
 }
 
@@ -45,5 +45,5 @@ int main(int argc, char *argv[])
     if (n <= 0)
         usage();
     return 0;
-    //return create(n);
+    return create(n);
 }

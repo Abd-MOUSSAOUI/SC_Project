@@ -10,7 +10,7 @@
 
 noreturn void usage(void)
 {
-    fprintf(stderr, "Usage: %s (ne prends aucun arg) \n", prog);
+    fprintf(stderr, "usage: %s (ne prends aucun arg) \n", prog);
     exit(EXIT_FAILURE);
 }
 

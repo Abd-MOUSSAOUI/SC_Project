@@ -10,7 +10,7 @@
 
 noreturn void usage(void)
 {
-    fprintf(stderr, "Usage: %s [v] [c] [ta] [td] (v=nom, c=nbr de conts, ta=tmps d’accostage, td=tmps de dechargement d'une cont \n", prog);
+    fprintf(stderr, "usage: %s [v] [c] [ta] [td] (v=nom, c=nbr de conts, ta=tmps d’accostage, td=tmps de dechargement d'une cont \n", prog);
     exit(EXIT_FAILURE);
 }
 
