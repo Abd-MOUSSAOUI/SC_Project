@@ -14,7 +14,6 @@ noreturn void usage(void)
     exit(EXIT_FAILURE);
 }
 
-
 void delete_sem_if_exist(void)
 {
     key_t k = key();
