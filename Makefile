@@ -68,3 +68,4 @@ clean:
 	rm -f *.log
 	rm -f tags core
 	rm -rf *.dSYM
+	rm -rf .vscode

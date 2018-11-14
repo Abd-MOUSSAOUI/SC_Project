@@ -40,6 +40,15 @@ struct port *get_port(int shmid, bool readonly)
     return (struct port *)p;
 }
 
+struct navire *get_navire(int shmid, bool readonly)
+{
+    int shmflg = readonly ? SHM_RDONLY : 0;
+    void *n;
+    if ((n = shmat(shmid, NULL, shmflg)) == (void *)-1)
+        error("shmat");
+    return (struct navire *)n;
+}
+
 int create_shared_memory(void)
 {
     key_t k = key();

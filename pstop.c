@@ -14,13 +14,12 @@ noreturn void usage(void)
     exit(EXIT_FAILURE);
 }
 
-
 int stop(void)
 {
-    INFO("Suppression du port ...");
-    delete_shared_memory();
-    delete_semaphore();
-    INFO("Le port est supprimé.");
+    INFO("Fermeture du port..");
+    int semid = get_semaphore_id();
+    set_semaphore_value(semid, SEM_CLOSED, 1);
+    INFO("Le port est fermé.");
     return EXIT_SUCCESS;
 }
 

@@ -17,7 +17,7 @@ noreturn void usage(void)
 
 int main(int argc, char *argv[])
 {
-    int c,tc;
+    int c,tc, semid;
     char v;
     prog = argv[0];
     if (argc != 4)
@@ -27,5 +27,6 @@ int main(int argc, char *argv[])
     tc = atoi(argv[3]);
     if (c <= 0 || tc <0 )
         usage();
-    return 0;
+    //struct port *p = get_port(get_shared_memory_id(), true);
+    semid = get_semaphore_id();
 }

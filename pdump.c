@@ -29,11 +29,12 @@ int main(int argc, char *argv[])
     inside = get_semaphore_value(semid, SEM_INSIDE);
     closed = get_semaphore_value(semid, SEM_CLOSED);
 
-    INFOF(" Capacité max.: %d", p->capacity);
-    INFOF(" Numéro de quai : %d", p->number_of_dock);
-    INFOF(" Bateau: %c", p->name);
-    INFOF(" État du bateau: %s", (p->dock ? "à quai" : "en attente"));
-    INFOF(" Nbr de conteneur: %d", p->number_of_container);
+    INFOF(" Capacité du port: %d", p->capacity);
+    INFOF(" Etat du port: %s", closed ? "fermé" : "ouvert");
+    // INFOF(" Numéro de quai : %d", p->number_of_dock);
+    // INFOF(" Bateau: %c", p->name);
+    // INFOF(" État du bateau: %s", (p->dock ? "à quai" : "en attente"));
+    // INFOF(" Nbr de conteneur: %d", p->number_of_container);
     INFOF(" Bateaux en attente: %d", waiting);
     INFOF(" À l'intérieur: %d", inside);
 }

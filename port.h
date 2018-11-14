@@ -33,7 +33,7 @@ char *prog;
         if(semop(semId, s, sizeof(s) / sizeof(struct sembuf)) == -1) \
         {                                   \
             perror("semop");                \
-            exit(CODE_ERREUR);}             \
+            exit(EXIT_FAILURE);}             \
 }                                           \
 
 #ifndef LOG_LEVEL
@@ -81,11 +81,13 @@ char *prog;
 
 int get_log_level(void);
 
-noreturn void error(char *c);
+void error(char *c);
 
 key_t key(void);
 
 struct port *get_port(int shmid, bool readonly);
+
+struct navire *get_navire(int shmid, bool readonly);
 
 int create_shared_memory(void);
 
@@ -104,17 +106,19 @@ int get_semaphore_value(int semid, unsigned short which);
 void set_semaphore_value(int semid, unsigned short which, unsigned short value);
 
 
-
 struct port
 {
     int capacity;
-    char name;
-    int number_of_container;
-    int time_of_docking;
-    int time_to_discharge_a_container;
-    int dock; //1 s'il est à quai, 0 sinon
-    int number_of_dock; // numéro de quai ou il est accosté
+    int capacity_actual;
 };
 
+struct navire
+{
+    int number_of_dock;
+    char name;
+    int number_of_container;
+    int time_to_discharge_a_container;
+    int time_to_docking;
+};
 
 #endif
