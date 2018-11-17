@@ -31,6 +31,7 @@ key_t key(void)
     return k;
 }
 
+
 struct port *get_port(int shmid, bool readonly)
 {
     int shmflg = readonly ? SHM_RDONLY : 0;
@@ -40,14 +41,6 @@ struct port *get_port(int shmid, bool readonly)
     return (struct port *)p;
 }
 
-struct navire *get_navire(int shmid, bool readonly)
-{
-    int shmflg = readonly ? SHM_RDONLY : 0;
-    void *n;
-    if ((n = shmat(shmid, NULL, shmflg)) == (void *)-1)
-        error("shmat");
-    return (struct navire *)n;
-}
 
 int create_shared_memory(void)
 {
@@ -88,7 +81,7 @@ void delete_shared_memory(void)
         error("shmctl");
 }
 
-int create_semaphore(void)
+int create_semaphore(int n)
 {
     key_t k = key();
     int semid = semget(k, 0, 0);
@@ -109,6 +102,12 @@ int create_semaphore(void)
         error("semget");
     if (semctl(semid, 0, SETVAL, 1) == -1)
         error("semctl"); // 1 = Closed
+    if (semctl(semid, 1, SETVAL, 1) == -1)
+        error("semctl"); // 1 = Sleep
+    if (semctl(semid, 2, SETVAL, n) == -1)
+        error("semctl"); // n = capacity
+    if (semctl(semid, 3, SETVAL, 0) == -1)
+        error("semctl"); // 0 boat incide
     DEBUGF("semid = %d", semid);
     return semid;
 }
@@ -142,5 +141,26 @@ void set_semaphore_value(int semid, unsigned short which, unsigned short value)
 {
     if (semctl(semid, which, SETVAL, value) == -1)
         error("semctl");
+}
+
+int get_free_dock(struct port *p)
+{   
+    int i;
+    for(i=0; i<p->capacity; i++)
+        if(p->boats[i].free) return i;
+    return -1;
+}
+
+void initializer(struct port *p)
+{
+    int i;
+    for(i = 0; i<p->capacity; i++)
+    {
+        p->boats[i].number_of_dock = 0;
+        p->boats[i].free = true;
+        p->boats[i].name = '\0';
+        p->boats[i].number_of_container = 0;
+        p->boats[i].time_to_discharge_a_container = 0;
+    }
 }
 

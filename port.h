@@ -26,6 +26,8 @@
 
 char *prog;
 
+#define MAX_BOATS 26 //Nombre des lettres
+
 // SEMOP construit la structure à la volée, et vérifie le code de retour.
 #define SEMOPS(semId, ...)                  \
 {                                           \
@@ -33,7 +35,7 @@ char *prog;
         if(semop(semId, s, sizeof(s) / sizeof(struct sembuf)) == -1) \
         {                                   \
             perror("semop");                \
-            exit(EXIT_FAILURE);}             \
+            exit(EXIT_FAILURE);}            \
 }                                           \
 
 #ifndef LOG_LEVEL
@@ -43,9 +45,9 @@ char *prog;
 //Niveau de chaque type de log.
 #define LEVEL_FATAL 0
 #define LEVEL_ERROR 1
-#define LEVEL_WARN 1
-#define LEVEL_INFO 1
-#define LEVEL_DEBUG 2
+#define LEVEL_WARN 2
+#define LEVEL_DEBUG 3
+#define LEVEL_INFO 4
 
 // Macros pour log.
 #define FATAL(MSG) LOG(FATAL, MSG "\n")
@@ -87,15 +89,13 @@ key_t key(void);
 
 struct port *get_port(int shmid, bool readonly);
 
-struct navire *get_navire(int shmid, bool readonly);
-
 int create_shared_memory(void);
 
 int get_shared_memory_id(void);
 
 void delete_shared_memory(void);
 
-int create_semaphore(void);
+int create_semaphore(int n);
 
 int get_semaphore_id(void);
 
@@ -105,20 +105,25 @@ int get_semaphore_value(int semid, unsigned short which);
 
 void set_semaphore_value(int semid, unsigned short which, unsigned short value);
 
+int get_free_dock(struct port *p);
 
-struct port
-{
-    int capacity;
-    int capacity_actual;
-};
+void initializer(struct port *p);
 
-struct navire
+typedef struct navire
 {
     int number_of_dock;
+    bool free;
     char name;
     int number_of_container;
     int time_to_discharge_a_container;
-    int time_to_docking;
-};
+} bateau;
+
+typedef struct port
+{
+    int capacity;
+    bateau boats[MAX_BOATS];
+} port;
+
+
 
 #endif

@@ -19,6 +19,7 @@ int stop(void)
     INFO("Fermeture du port..");
     int semid = get_semaphore_id();
     set_semaphore_value(semid, SEM_CLOSED, 1);
+    set_semaphore_value(semid, SEM_SLEEP, 0);
     INFO("Le port est fermé.");
     return EXIT_SUCCESS;
 }
