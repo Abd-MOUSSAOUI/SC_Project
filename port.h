@@ -6,8 +6,8 @@
 //  Copyright © 2018 MOUSSAOUI. All rights reserved.
 //
 
-#ifndef port_h
-#define port_h
+#ifndef PORT_H
+#define PORT_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,11 +18,14 @@
 #include <stdnoreturn.h>
 #include <errno.h>
 #include <stdbool.h>
+#include <time.h>
 
-#define SEM_CLOSED 0
-#define SEM_SLEEP 1
-#define SEM_CAPACITY 2
-#define SEM_INSIDE 3
+//Sémaphores pour chaque quai
+#define SEM_DISCHARGE_NAV 0
+#define SEM_DISCHARGE_CAM 1
+//Sémaphores générals pour tout le programme
+#define SEM_CAPACITY 0
+#define SEM_CLOSED 1
 
 char *prog;
 
@@ -32,7 +35,7 @@ char *prog;
 #define SEMOPS(semId, ...)                  \
 {                                           \
         struct sembuf s[] = {__VA_ARGS__};  \
-        if(semop(semId, s, sizeof(s) / sizeof(struct sembuf)) == -1) \
+        if(semop(semId, s, sizeof(s)/sizeof(struct sembuf)) == -1) \
         {                                   \
             perror("semop");                \
             exit(EXIT_FAILURE);}            \
@@ -44,10 +47,10 @@ char *prog;
 
 //Niveau de chaque type de log.
 #define LEVEL_FATAL 0
-#define LEVEL_ERROR 1
-#define LEVEL_WARN 2
-#define LEVEL_DEBUG 3
-#define LEVEL_INFO 4
+#define LEVEL_ERROR 0
+#define LEVEL_WARN 1
+#define LEVEL_DEBUG 1
+#define LEVEL_INFO 1
 
 // Macros pour log.
 #define FATAL(MSG) LOG(FATAL, MSG "\n")
@@ -81,11 +84,13 @@ char *prog;
         }                                                 \
     }
 
+int MAX(int X, int Y);
+
 int get_log_level(void);
 
 void error(char *c);
 
-key_t key(void);
+key_t key(int i);
 
 struct port *get_port(int shmid, bool readonly);
 
@@ -95,33 +100,32 @@ int get_shared_memory_id(void);
 
 void delete_shared_memory(void);
 
-int create_semaphore(int n);
+void create_semaphore(int n);
 
-int get_semaphore_id(void);
+int get_semaphore_id(int i);
 
-void delete_semaphore(void);
+void delete_semaphore(int i);
 
-int get_semaphore_value(int semid, unsigned short which);
+int get_semaphore_value(int semid, int which);
 
-void set_semaphore_value(int semid, unsigned short which, unsigned short value);
+void set_semaphore_value(int semid, int which, int value);
 
-int get_free_dock(struct port *p);
 
-void initializer(struct port *p);
-
-typedef struct navire
+typedef struct dock
 {
     int number_of_dock;
     bool free;
     char name;
     int number_of_container;
     int time_to_discharge_a_container;
-} bateau;
+    int time_to_charge_a_container;
+} dock;
 
 typedef struct port
 {
     int capacity;
-    bateau boats[MAX_BOATS];
+    int inside;
+    dock boats[MAX_BOATS];
 } port;
 
 

@@ -8,6 +8,11 @@
 
 #include "port.h"
 
+int MAX(int X, int Y)
+{
+    return ((X) > (Y)) ? (X) : (Y);
+}
+
 noreturn void error(char *c)
 {
     perror(c);
@@ -23,10 +28,10 @@ int get_log_level(void)
     return level >= 0 ? level : 0;
 }
 
-key_t key(void)
+key_t key(int i)
 {
     key_t k;
-    if ((k = ftok("/etc/passwd", 0)) == -1)
+    if ((k = ftok("/etc/passwd", i)) == -1)
         error("ftok");
     return k;
 }
@@ -44,7 +49,9 @@ struct port *get_port(int shmid, bool readonly)
 
 int create_shared_memory(void)
 {
-    key_t k = key();
+    key_t k;
+    if ((k = ftok("/etc/passwd", 999)) == -1)
+        error("ftok");
     int shmid = shmget(k, 0, 0);
     if (shmid > -1)
     {
@@ -66,12 +73,15 @@ int create_shared_memory(void)
 
 int get_shared_memory_id(void)
 {
-    key_t k = key();
-    int shmid;
-    if ((shmid = shmget(k, 0, 0)) == -1)
-        error("shmget");
-    DEBUGF("shmid = %d", shmid);
-    return shmid;
+    key_t k;
+    if ((k = ftok("/etc/passwd", 999)) == -1)
+        error("ftok");
+    int shmid = shmget(k, 0, 0);
+    if (shmid > -1)
+    {
+        return shmid;
+    }
+    return -1;
 }
 
 void delete_shared_memory(void)
@@ -81,40 +91,30 @@ void delete_shared_memory(void)
         error("shmctl");
 }
 
-int create_semaphore(int n)
+void create_semaphore(int n)
 {
-    key_t k = key();
-    int semid = semget(k, 0, 0);
-    if (semid > -1)
+    int i, semid;
+    key_t k, k1;
+    k1 = key(n);
+    if ((semid = semget(k1, 2, IPC_CREAT | 0666)) == -1) error("semget");
+
+    if (semctl(semid, SEM_CAPACITY, SETVAL, n) == -1) error("semctl");
+    if (semctl(semid, SEM_CLOSED, SETVAL, 1) == -1) error("semctl");
+
+    for (i = 0; i < n; i++)
     {
-        fprintf(stderr, "Un ensemble de sémaphores existe déjà, supression de l'ancien ensemble.");
-        fflush(stderr);
-        if (semctl(semid, 0, IPC_RMID) == -1)
-            error("semctl");
-    }
-    else
-    {
-        if (errno != ENOENT)
-            error("semget");
+        k = key(i);
+        if ((semid = semget(k, 2, IPC_CREAT | 0666)) == -1) error("semget");
+        if (semctl(semid, SEM_DISCHARGE_NAV, SETVAL, 0) == -1) error("semctl");
+        if (semctl(semid, SEM_DISCHARGE_CAM, SETVAL, 1) == -1) error("semctl");
     }
 
-    if ((semid = semget(k, 4, IPC_CREAT | 0666)) == -1)
-        error("semget");
-    if (semctl(semid, 0, SETVAL, 1) == -1)
-        error("semctl"); // 1 = Closed
-    if (semctl(semid, 1, SETVAL, 1) == -1)
-        error("semctl"); // 1 = Sleep
-    if (semctl(semid, 2, SETVAL, n) == -1)
-        error("semctl"); // n = capacity
-    if (semctl(semid, 3, SETVAL, 0) == -1)
-        error("semctl"); // 0 boat incide
     DEBUGF("semid = %d", semid);
-    return semid;
 }
 
-int get_semaphore_id(void)
+int get_semaphore_id(int i)
 {
-    key_t k = key();
+    key_t k = key(i);
     int semid;
     if ((semid = semget(k, 0, 0)) == -1)
         error("semget");
@@ -122,45 +122,23 @@ int get_semaphore_id(void)
     return semid;
 }
 
-void delete_semaphore(void)
+void delete_semaphore(int i)
 {
-    int semid = get_semaphore_id();
+    int semid = get_semaphore_id(i);
     if (semctl(semid, 0, IPC_RMID) == -1)
         error("semctl");
 }
 
-int get_semaphore_value(int semid, unsigned short which)
+int get_semaphore_value(int semid, int which)
 {
     int val;
-    if ((val = semctl(semid, which, GETVAL)) == -1)
+    if ((val = semctl(semid, which, GETVAL, 0)) == -1)
         error("semctl");
     return val;
 }
 
-void set_semaphore_value(int semid, unsigned short which, unsigned short value)
+void set_semaphore_value(int semid, int which, int value)
 {
     if (semctl(semid, which, SETVAL, value) == -1)
         error("semctl");
 }
-
-int get_free_dock(struct port *p)
-{   
-    int i;
-    for(i=0; i<p->capacity; i++)
-        if(p->boats[i].free) return i;
-    return -1;
-}
-
-void initializer(struct port *p)
-{
-    int i;
-    for(i = 0; i<p->capacity; i++)
-    {
-        p->boats[i].number_of_dock = 0;
-        p->boats[i].free = true;
-        p->boats[i].name = '\0';
-        p->boats[i].number_of_container = 0;
-        p->boats[i].time_to_discharge_a_container = 0;
-    }
-}
-

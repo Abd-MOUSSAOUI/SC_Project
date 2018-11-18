@@ -1,0 +1,603 @@
+++ '[' -z '' ']'
+++ MARGE=0.1
++ '[' '!' -z '' ']'
++ NSIMU=3
++ NAVIRES='a b c d e f g h'
++ NCONTENEURS=3
++ TA=0
++ TD=50
++ TC=100
+++ echo a b c d e f g h
+++ wc -w
++ NQUAIS='       8'
++ ./pclean
++ i=1
++ '[' 1 -le 3 ']'
++ echo 'simulation numéro 1'
+simulation numéro 1
++ PIDCAP=79308
++ sleep 0.1
++ ./pcap 8
++ PIDNAV=
++ for m in '$NAVIRES'
++ PIDNAV=' 79310'
++ for m in '$NAVIRES'
++ PIDNAV=' 79310 79311'
++ for m in '$NAVIRES'
++ ./pnav a 3 0 50
++ PIDNAV=' 79310 79311 79312'
++ ./pnav b 3 0 50
++ for m in '$NAVIRES'
++ ./pnav c 3 0 50
++ PIDNAV=' 79310 79311 79312 79313'
++ for m in '$NAVIRES'
++ ./pnav d 3 0 50
++ PIDNAV=' 79310 79311 79312 79313 79314'
++ for m in '$NAVIRES'
++ ./pnav e 3 0 50
++ PIDNAV=' 79310 79311 79312 79313 79314 79315'
++ for m in '$NAVIRES'
++ ./pnav f 3 0 50
++ PIDNAV=' 79310 79311 79312 79313 79314 79315 79316'
++ for m in '$NAVIRES'
++ ./pnav g 3 0 50
++ PIDNAV=' 79310 79311 79312 79313 79314 79315 79316 79317'
++ ./pnav h 3 0 50
+++ echo a b c d e f g h
+++ wc -w
++ nnav='       8'
++ temps=0
+++ echo 'scale=3;0/1000+0.1'
+++ bc
++ sleep .100
++ PIDCAM=
++ for m in '$NAVIRES'
++ PIDCAM=' 79325'
++ for m in '$NAVIRES'
++ PIDCAM=' 79325 79326'
++ for m in '$NAVIRES'
++ PIDCAM=' 79325 79326 79327'
++ for m in '$NAVIRES'
++ PIDCAM=' 79325 79326 79327 79328'
++ for m in '$NAVIRES'
++ ./pfcam b 3 100
++ ./pfcam a 3 100
++ ./pfcam c 3 100
++ PIDCAM=' 79325 79326 79327 79328 79329'
++ for m in '$NAVIRES'
++ ./pfcam d 3 100
++ PIDCAM=' 79325 79326 79327 79328 79329 79333'
++ for m in '$NAVIRES'
++ ./pfcam e 3 100
++ PIDCAM=' 79325 79326 79327 79328 79329 79333 79335'
++ for m in '$NAVIRES'
++ PIDCAM=' 79325 79326 79327 79328 79329 79333 79335 79337'
++ '[' 50 -ge 100 ']'
++ temps=100
++ temps=350
++ ./pfcam f 3 100
++ ./pfcam g 3 100
++ ./pfcam h 3 100
+++ echo 'scale=3;350/1000'
+++ bc
++ sleep .350
+
+real	0m0.317s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.318s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.321s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.323s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.320s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.314s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.332s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.329s
+user	0m0.002s
+sys	0m0.002s
++ sleep 0.1
++ for pid in '$PIDCAM'
++ ps_termine 79325 'camion 79325 non terminé'
++ kill -0 79325
++ for pid in '$PIDCAM'
++ ps_termine 79326 'camion 79326 non terminé'
++ kill -0 79326
++ for pid in '$PIDCAM'
++ ps_termine 79327 'camion 79327 non terminé'
++ kill -0 79327
++ for pid in '$PIDCAM'
++ ps_termine 79328 'camion 79328 non terminé'
++ kill -0 79328
++ for pid in '$PIDCAM'
++ ps_termine 79329 'camion 79329 non terminé'
++ kill -0 79329
++ for pid in '$PIDCAM'
++ ps_termine 79333 'camion 79333 non terminé'
++ kill -0 79333
++ for pid in '$PIDCAM'
++ ps_termine 79335 'camion 79335 non terminé'
++ kill -0 79335
++ for pid in '$PIDCAM'
++ ps_termine 79337 'camion 79337 non terminé'
++ kill -0 79337
++ for pid in '$PIDNAV'
++ ps_termine 79310 'navire 79310 non terminé'
++ kill -0 79310
++ for pid in '$PIDNAV'
++ ps_termine 79311 'navire 79311 non terminé'
++ kill -0 79311
++ for pid in '$PIDNAV'
++ ps_termine 79312 'navire 79312 non terminé'
++ kill -0 79312
++ for pid in '$PIDNAV'
++ ps_termine 79313 'navire 79313 non terminé'
++ kill -0 79313
++ for pid in '$PIDNAV'
++ ps_termine 79314 'navire 79314 non terminé'
++ kill -0 79314
++ for pid in '$PIDNAV'
++ ps_termine 79315 'navire 79315 non terminé'
++ kill -0 79315
++ for pid in '$PIDNAV'
++ ps_termine 79316 'navire 79316 non terminé'
++ kill -0 79316
++ for pid in '$PIDNAV'
++ ps_termine 79317 'navire 79317 non terminé'
++ kill -0 79317
++ ./pstop
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 94502912
+INFO	pstop.c:31	Le port est fermé.
++ sleep 0.1
++ ps_termine 79308 'pcap non terminé'
++ kill -0 79308
++ i=2
++ '[' 2 -le 3 ']'
++ echo 'simulation numéro 2'
+simulation numéro 2
++ PIDCAP=79348
++ sleep 0.1
++ ./pcap 8
++ PIDNAV=
++ for m in '$NAVIRES'
++ PIDNAV=' 79350'
++ for m in '$NAVIRES'
++ PIDNAV=' 79350 79351'
++ for m in '$NAVIRES'
++ ./pnav a 3 0 50
++ ./pnav b 3 0 50
++ PIDNAV=' 79350 79351 79352'
++ for m in '$NAVIRES'
++ ./pnav c 3 0 50
++ PIDNAV=' 79350 79351 79352 79353'
++ for m in '$NAVIRES'
++ ./pnav d 3 0 50
++ PIDNAV=' 79350 79351 79352 79353 79354'
++ for m in '$NAVIRES'
++ ./pnav e 3 0 50
++ PIDNAV=' 79350 79351 79352 79353 79354 79355'
++ for m in '$NAVIRES'
++ ./pnav f 3 0 50
++ PIDNAV=' 79350 79351 79352 79353 79354 79355 79356'
++ for m in '$NAVIRES'
++ ./pnav g 3 0 50
++ PIDNAV=' 79350 79351 79352 79353 79354 79355 79356 79357'
++ ./pnav h 3 0 50
+++ echo a b c d e f g h
+++ wc -w
++ nnav='       8'
++ temps=0
+++ echo 'scale=3;0/1000+0.1'
+++ bc
++ sleep .100
++ PIDCAM=
++ for m in '$NAVIRES'
++ PIDCAM=' 79365'
++ for m in '$NAVIRES'
++ PIDCAM=' 79365 79366'
++ for m in '$NAVIRES'
++ PIDCAM=' 79365 79366 79367'
++ for m in '$NAVIRES'
++ PIDCAM=' 79365 79366 79367 79368'
++ for m in '$NAVIRES'
++ ./pfcam b 3 100
++ ./pfcam a 3 100
++ PIDCAM=' 79365 79366 79367 79368 79369'
++ for m in '$NAVIRES'
++ ./pfcam c 3 100
++ ./pfcam d 3 100
++ PIDCAM=' 79365 79366 79367 79368 79369 79372'
++ for m in '$NAVIRES'
++ ./pfcam e 3 100
++ PIDCAM=' 79365 79366 79367 79368 79369 79372 79375'
++ for m in '$NAVIRES'
++ ./pfcam f 3 100
++ PIDCAM=' 79365 79366 79367 79368 79369 79372 79375 79377'
++ '[' 50 -ge 100 ']'
++ temps=100
++ temps=350
++ ./pfcam g 3 100
+++ echo 'scale=3;350/1000'
++ ./pfcam h 3 100
+++ bc
++ sleep .350
+
+real	0m0.319s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.319s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.320s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.324s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.326s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.322s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.327s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.327s
+user	0m0.002s
+sys	0m0.002s
++ sleep 0.1
++ for pid in '$PIDCAM'
++ ps_termine 79365 'camion 79365 non terminé'
++ kill -0 79365
++ for pid in '$PIDCAM'
++ ps_termine 79366 'camion 79366 non terminé'
++ kill -0 79366
++ for pid in '$PIDCAM'
++ ps_termine 79367 'camion 79367 non terminé'
++ kill -0 79367
++ for pid in '$PIDCAM'
++ ps_termine 79368 'camion 79368 non terminé'
++ kill -0 79368
++ for pid in '$PIDCAM'
++ ps_termine 79369 'camion 79369 non terminé'
++ kill -0 79369
++ for pid in '$PIDCAM'
++ ps_termine 79372 'camion 79372 non terminé'
++ kill -0 79372
++ for pid in '$PIDCAM'
++ ps_termine 79375 'camion 79375 non terminé'
++ kill -0 79375
++ for pid in '$PIDCAM'
++ ps_termine 79377 'camion 79377 non terminé'
++ kill -0 79377
++ for pid in '$PIDNAV'
++ ps_termine 79350 'navire 79350 non terminé'
++ kill -0 79350
++ for pid in '$PIDNAV'
++ ps_termine 79351 'navire 79351 non terminé'
++ kill -0 79351
++ for pid in '$PIDNAV'
++ ps_termine 79352 'navire 79352 non terminé'
++ kill -0 79352
++ for pid in '$PIDNAV'
++ ps_termine 79353 'navire 79353 non terminé'
++ kill -0 79353
++ for pid in '$PIDNAV'
++ ps_termine 79354 'navire 79354 non terminé'
++ kill -0 79354
++ for pid in '$PIDNAV'
++ ps_termine 79355 'navire 79355 non terminé'
++ kill -0 79355
++ for pid in '$PIDNAV'
++ ps_termine 79356 'navire 79356 non terminé'
++ kill -0 79356
++ for pid in '$PIDNAV'
++ ps_termine 79357 'navire 79357 non terminé'
++ kill -0 79357
++ ./pstop
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 94568448
+INFO	pstop.c:31	Le port est fermé.
++ sleep 0.1
++ ps_termine 79348 'pcap non terminé'
++ kill -0 79348
++ i=3
++ '[' 3 -le 3 ']'
++ echo 'simulation numéro 3'
+simulation numéro 3
++ PIDCAP=79395
++ sleep 0.1
++ ./pcap 8
++ PIDNAV=
++ for m in '$NAVIRES'
++ PIDNAV=' 79397'
++ for m in '$NAVIRES'
++ ./pnav a 3 0 50
++ PIDNAV=' 79397 79398'
++ for m in '$NAVIRES'
++ ./pnav b 3 0 50
++ PIDNAV=' 79397 79398 79399'
++ for m in '$NAVIRES'
++ ./pnav c 3 0 50
++ PIDNAV=' 79397 79398 79399 79400'
++ for m in '$NAVIRES'
++ ./pnav d 3 0 50
++ PIDNAV=' 79397 79398 79399 79400 79401'
++ for m in '$NAVIRES'
++ ./pnav e 3 0 50
++ PIDNAV=' 79397 79398 79399 79400 79401 79402'
++ for m in '$NAVIRES'
++ ./pnav f 3 0 50
++ PIDNAV=' 79397 79398 79399 79400 79401 79402 79403'
++ for m in '$NAVIRES'
++ ./pnav g 3 0 50
++ PIDNAV=' 79397 79398 79399 79400 79401 79402 79403 79404'
++ ./pnav h 3 0 50
+++ echo a b c d e f g h
+++ wc -w
++ nnav='       8'
++ temps=0
+++ echo 'scale=3;0/1000+0.1'
+++ bc
++ sleep .100
++ PIDCAM=
++ for m in '$NAVIRES'
++ PIDCAM=' 79412'
++ for m in '$NAVIRES'
++ PIDCAM=' 79412 79413'
++ for m in '$NAVIRES'
++ PIDCAM=' 79412 79413 79414'
++ for m in '$NAVIRES'
++ ./pfcam a 3 100
++ ./pfcam b 3 100
++ PIDCAM=' 79412 79413 79414 79415'
++ for m in '$NAVIRES'
++ ./pfcam c 3 100
++ PIDCAM=' 79412 79413 79414 79415 79418'
++ for m in '$NAVIRES'
++ ./pfcam d 3 100
++ PIDCAM=' 79412 79413 79414 79415 79418 79420'
++ for m in '$NAVIRES'
++ ./pfcam e 3 100
++ PIDCAM=' 79412 79413 79414 79415 79418 79420 79422'
++ for m in '$NAVIRES'
++ PIDCAM=' 79412 79413 79414 79415 79418 79420 79422 79424'
++ '[' 50 -ge 100 ']'
++ temps=100
++ temps=350
++ ./pfcam f 3 100
++ ./pfcam g 3 100
++ ./pfcam h 3 100
+++ echo 'scale=3;350/1000'
+++ bc
++ sleep .350
+
+real	0m0.325s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.324s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.326s
+user	0m0.002s
+sys	0m0.003s
+
+real	0m0.322s
+
+real	0m0.323s
+user	0m0.002s
+sys	0m0.002s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.324s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.321s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.327s
+user	0m0.002s
+sys	0m0.002s
++ sleep 0.1
++ for pid in '$PIDCAM'
++ ps_termine 79412 'camion 79412 non terminé'
++ kill -0 79412
++ for pid in '$PIDCAM'
++ ps_termine 79413 'camion 79413 non terminé'
++ kill -0 79413
++ for pid in '$PIDCAM'
++ ps_termine 79414 'camion 79414 non terminé'
++ kill -0 79414
++ for pid in '$PIDCAM'
++ ps_termine 79415 'camion 79415 non terminé'
++ kill -0 79415
++ for pid in '$PIDCAM'
++ ps_termine 79418 'camion 79418 non terminé'
++ kill -0 79418
++ for pid in '$PIDCAM'
++ ps_termine 79420 'camion 79420 non terminé'
++ kill -0 79420
++ for pid in '$PIDCAM'
++ ps_termine 79422 'camion 79422 non terminé'
++ kill -0 79422
++ for pid in '$PIDCAM'
++ ps_termine 79424 'camion 79424 non terminé'
++ kill -0 79424
++ for pid in '$PIDNAV'
++ ps_termine 79397 'navire 79397 non terminé'
++ kill -0 79397
++ for pid in '$PIDNAV'
++ ps_termine 79398 'navire 79398 non terminé'
++ kill -0 79398
++ for pid in '$PIDNAV'
++ ps_termine 79399 'navire 79399 non terminé'
++ kill -0 79399
++ for pid in '$PIDNAV'
++ ps_termine 79400 'navire 79400 non terminé'
++ kill -0 79400
++ for pid in '$PIDNAV'
++ ps_termine 79401 'navire 79401 non terminé'
++ kill -0 79401
++ for pid in '$PIDNAV'
++ ps_termine 79402 'navire 79402 non terminé'
++ kill -0 79402
++ for pid in '$PIDNAV'
++ ps_termine 79403 'navire 79403 non terminé'
++ kill -0 79403
++ for pid in '$PIDNAV'
++ ps_termine 79404 'navire 79404 non terminé'
++ kill -0 79404
++ ./pstop
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 94633984
+INFO	pstop.c:31	Le port est fermé.
++ sleep 0.1
++ ps_termine 79395 'pcap non terminé'
++ kill -0 79395
++ i=4
++ '[' 4 -le 3 ']'
++ logs_aux
++ set +x
+==> log aux /tmp/test-180-79301.cama
+DEBUG	port.c:121	semid = 37289985
+==> log aux /tmp/test-180-79301.camb
+DEBUG	port.c:121	semid = 32768002
+==> log aux /tmp/test-180-79301.camc
+DEBUG	port.c:121	semid = 4128772
+==> log aux /tmp/test-180-79301.camd
+DEBUG	port.c:121	semid = 18612227
+==> log aux /tmp/test-180-79301.came
+DEBUG	port.c:121	semid = 4128773
+==> log aux /tmp/test-180-79301.camf
+DEBUG	port.c:121	semid = 4063238
+==> log aux /tmp/test-180-79301.camg
+DEBUG	port.c:121	semid = 4063239
+==> log aux /tmp/test-180-79301.camh
+DEBUG	port.c:121	semid = 4063240
+==> log aux /tmp/test-180-79301.cap
+INFO	pcap.c:68	Création de la mémoire partagée…
+DEBUG	port.c:70	shmid = 45613056
+INFO	pcap.c:70	Création de l'ensemble des sémaphores…
+DEBUG	port.c:112	semid = 4063240
+DEBUG	pcap.c:76	Création du port..
+INFO	pcap.c:77	Un port qui contient 8 quai(s) a été créé.
+DEBUG	pcap.c:20	On met SEM_CLOSED à 0
+INFO	pcap.c:21	Ouverture du port...
+DEBUG	port.c:121	semid = 94633984
+DEBUG	pcap.c:24	SEM_CLOSED = 0
+INFO	pcap.c:25	Le port est ouvert...
+INFO	pcap.c:88	Supression du port..
+INFO	pcap.c:33	Suppression du port...
+DEBUG	port.c:121	semid = 37289985
+DEBUG	port.c:121	semid = 32768002
+DEBUG	port.c:121	semid = 18612227
+DEBUG	port.c:121	semid = 4128772
+DEBUG	port.c:121	semid = 4128773
+DEBUG	port.c:121	semid = 4063238
+DEBUG	port.c:121	semid = 4063239
+DEBUG	port.c:121	semid = 4063240
+DEBUG	port.c:121	semid = 94633984
+INFO	pcap.c:39	Le port est supprimé! Ciao
+==> log aux /tmp/test-180-79301.nava
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:0
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 37289985
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-180-79301.navb
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:1
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 32768002
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-180-79301.navc
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:3
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 4128772
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-180-79301.navd
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:2
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 18612227
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-180-79301.nave
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:4
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 4128773
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-180-79301.navf
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:5
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 4063238
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-180-79301.navg
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:6
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 4063239
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-180-79301.navh
+DEBUG	port.c:121	semid = 94633984
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:7
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 4063240
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao

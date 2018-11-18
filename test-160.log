@@ -1,0 +1,100 @@
+++ '[' -z '' ']'
+++ MARGE=0.1
++ ./pclean
++ PIDCAP=79104
++ sleep 0.1
++ ./pcap 1
++ PIDNAVA=79106
++ sleep 0.1
++ ./pnav a 2 0 0
++ ps_existe 79106 'pnav a devrait être là'
++ kill -0 79106
++ PIDNAVB=79108
++ sleep 0.1
++ ./pnav b 5 0 0
++ ps_existe 79108 'pnav b devrait être là'
++ kill -0 79108
++ ./pfcam b 2 0
+ERROR	pfcam.c:47	Le navire n'est pas à quai ! je me casse.. Ciao
++ PIDCAMA=79111
++ ./pfcam a 2 0
+++ echo '3*0.1'
+++ bc
++ sleep .3
++ ps_termine 79111 'pfcam a devrait avoir fini'
++ kill -0 79111
++ ps_termine 79106 'pnav a devrait avoir fini'
++ kill -0 79106
++ ./pstop
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 94240768
+INFO	pstop.c:31	Le port est fermé.
++ PIDNAVC=79117
++ sleep 0.1
++ ./pnav c 2 0 0
++ ps_termine 79117 'pnav c devrait être reparti'
++ kill -0 79117
++ PIDCAMB=79119
++ ./pfcam b 3 0
+++ echo '3*0.1'
+++ bc
++ sleep .3
++ ps_termine 79119 'pfcam b 1/2 devrait avoir fini'
++ kill -0 79119
++ PIDCAMB=79124
++ ./pfcam b 2 0
+++ echo '3*0.1'
+++ bc
++ sleep .3
++ ps_termine 79124 'pfcam b 2/2 devrait avoir fini'
++ kill -0 79124
++ ps_termine 79108 'pnav b devrait avoir fini'
++ kill -0 79108
++ ps_termine 79104 'pcap devrait avoir fini'
++ kill -0 79104
++ logs_aux
++ set +x
+==> log aux /tmp/test-160-79100.cama
+DEBUG	port.c:121	semid = 36896769
+==> log aux /tmp/test-160-79100.camb1
+DEBUG	port.c:121	semid = 36896769
+==> log aux /tmp/test-160-79100.camb2
+DEBUG	port.c:121	semid = 36896769
+==> log aux /tmp/test-160-79100.cap
+INFO	pcap.c:68	Création de la mémoire partagée…
+DEBUG	port.c:70	shmid = 45219840
+INFO	pcap.c:70	Création de l'ensemble des sémaphores…
+DEBUG	port.c:112	semid = 36896769
+DEBUG	pcap.c:76	Création du port..
+INFO	pcap.c:77	Un port qui contient 1 quai(s) a été créé.
+DEBUG	pcap.c:20	On met SEM_CLOSED à 0
+INFO	pcap.c:21	Ouverture du port...
+DEBUG	port.c:121	semid = 94240768
+DEBUG	pcap.c:24	SEM_CLOSED = 0
+INFO	pcap.c:25	Le port est ouvert...
+INFO	pcap.c:88	Supression du port..
+INFO	pcap.c:33	Suppression du port...
+DEBUG	port.c:121	semid = 36896769
+DEBUG	port.c:121	semid = 94240768
+INFO	pcap.c:39	Le port est supprimé! Ciao
+==> log aux /tmp/test-160-79100.nava
+DEBUG	port.c:121	semid = 94240768
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:0
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 36896769
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-160-79100.navb
+DEBUG	port.c:121	semid = 94240768
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:0
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 36896769
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-160-79100.navc
+DEBUG	port.c:121	semid = 94240768
+ERROR	pnav.c:62	Le port est fermé! Je me casse.. Ciao

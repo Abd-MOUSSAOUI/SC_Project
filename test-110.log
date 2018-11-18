@@ -1,0 +1,108 @@
+++ '[' -z '' ']'
+++ MARGE=0.1
++ ./pclean
++ ipcs -m
++ ipcs -s
++ echo 'État initial des IPC'
+État initial des IPC
++ cat /tmp/test-110-78918.m1 /tmp/test-110-78918.s1
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Shared Memory:
+
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Semaphores:
+
++ sleep 0.1
++ ./pcap 3
++ ipcs -m
++ ipcs -s
++ echo 'État des IPC après création'
+État des IPC après création
++ cat /tmp/test-110-78918.m2 /tmp/test-110-78918.s2
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Shared Memory:
+m 44761088 0xe704f8f8 --rw-rw-rw-    abdou    staff
+
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Semaphores:
+s 93782016 0x0304f8f8 --ra-ra-ra-    abdou    staff
+s 36438017 0x0004f8f8 --ra-ra-ra-    abdou    staff
+s 32047106 0x0104f8f8 --ra-ra-ra-    abdou    staff
+s 18219011 0x0204f8f8 --ra-ra-ra-    abdou    staff
+
++ cmp -s /tmp/test-110-78918.m1 /tmp/test-110-78918.m2
++ cmp -s /tmp/test-110-78918.s1 /tmp/test-110-78918.s2
++ ./pstop
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 93782016
+INFO	pstop.c:31	Le port est fermé.
++ sleep 0.1
++ ipcs -m
++ ipcs -s
++ echo 'État des IPC à la fin'
+État des IPC à la fin
++ cat /tmp/test-110-78918.m2 /tmp/test-110-78918.s2
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Shared Memory:
+
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Semaphores:
+
++ cmp -s /tmp/test-110-78918.m1 /tmp/test-110-78918.m2
++ cmp -s /tmp/test-110-78918.s1 /tmp/test-110-78918.s2
++ ./pdump
+shmat: Invalid argument
++ ./pstop
+INFO	pstop.c:19	Fermeture du port..
+shmat: Invalid argument
++ ./pfcam x 2 0
+shmat: Invalid argument
++ ./pnav x 2 0 0
+shmat: Invalid argument
++ logs_aux
++ set +x
+==> log aux /tmp/test-110-78918.cap
+INFO	pcap.c:68	Création de la mémoire partagée…
+DEBUG	port.c:70	shmid = 44761088
+INFO	pcap.c:70	Création de l'ensemble des sémaphores…
+DEBUG	port.c:112	semid = 18219011
+DEBUG	pcap.c:76	Création du port..
+INFO	pcap.c:77	Un port qui contient 3 quai(s) a été créé.
+DEBUG	pcap.c:20	On met SEM_CLOSED à 0
+INFO	pcap.c:21	Ouverture du port...
+DEBUG	port.c:121	semid = 93782016
+DEBUG	pcap.c:24	SEM_CLOSED = 0
+INFO	pcap.c:25	Le port est ouvert...
+INFO	pcap.c:88	Supression du port..
+INFO	pcap.c:33	Suppression du port...
+DEBUG	port.c:121	semid = 36438017
+DEBUG	port.c:121	semid = 32047106
+DEBUG	port.c:121	semid = 18219011
+DEBUG	port.c:121	semid = 93782016
+INFO	pcap.c:39	Le port est supprimé! Ciao
+==> log aux /tmp/test-110-78918.m1
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Shared Memory:
+
+==> log aux /tmp/test-110-78918.m2
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Shared Memory:
+
+==> log aux /tmp/test-110-78918.s1
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Semaphores:
+
+==> log aux /tmp/test-110-78918.s2
+IPC status from <running system> as of Sun Nov 18 16:29:15 CET 2018
+T     ID     KEY        MODE       OWNER    GROUP
+Semaphores:
+

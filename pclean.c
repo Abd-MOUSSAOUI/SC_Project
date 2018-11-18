@@ -14,9 +14,9 @@ noreturn void usage(void)
     exit(EXIT_FAILURE);
 }
 
-void delete_sem_if_exist(void)
+void delete_sem_if_exist(int i)
 {
-    key_t k = key();
+    key_t k = key(i);
     int semid = semget(k, 0, 0);
     if (semid > -1)
     {
@@ -30,7 +30,7 @@ void delete_sem_if_exist(void)
 
 void delete_shm_if_exist(void)
 {
-    key_t k = key();
+    key_t k = key(999);
     int shmid = shmget(k, 0, 0);
     if (shmid > -1)
     {
@@ -47,9 +47,18 @@ int main(int argc, char *argv[])
     prog = argv[0];
     if (argc != 1)
         usage();
+    int id = get_shared_memory_id();
+    int i;
 
-    delete_shm_if_exist();
-    delete_sem_if_exist();
+    if (id != -1)
+    {
+        struct port *p = get_port(id, true);
+        for (i = 0; i <= p->capacity; i++)
+        {
+            delete_sem_if_exist(i);
+        }
+        delete_shm_if_exist();
+    }
     
     return 0;
 }

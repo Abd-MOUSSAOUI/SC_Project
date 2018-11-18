@@ -17,9 +17,17 @@ noreturn void usage(void)
 int stop(void)
 {
     INFO("Fermeture du port..");
-    int semid = get_semaphore_id();
+    struct port *p = get_port(get_shared_memory_id(), true);
+    int semid = get_semaphore_id(p->capacity);
     set_semaphore_value(semid, SEM_CLOSED, 1);
-    set_semaphore_value(semid, SEM_SLEEP, 0);
+    int waiting; int i;
+    if((waiting = semctl(semid, SEM_CAPACITY, GETNCNT)) > 0)
+    {
+        for(i=0; i<waiting; i++)
+        {
+            SEMOPS(semid, {SEM_CAPACITY, 1, 0});
+        }
+    }
     INFO("Le port est fermé.");
     return EXIT_SUCCESS;
 }

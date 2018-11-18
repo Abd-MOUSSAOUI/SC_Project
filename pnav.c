@@ -7,7 +7,6 @@
 //
 
 #include "port.h"
-#include <time.h>
 
 noreturn void usage(void)
 {
@@ -17,10 +16,24 @@ noreturn void usage(void)
 
 void create_pnav(char v, int c, int td, struct port *p, int quai)
 {
-    p->boats[quai].free=false;
     p->boats[quai].name = v;
     p->boats[quai].number_of_container = c;
     p->boats[quai].time_to_discharge_a_container = td;
+}
+
+int get_free_dock(struct port *p)
+{
+    int i;
+    for (i = 0; i < p->capacity; i++)
+    {
+        if (p->boats[i].free)
+        {
+            p->boats[i].free = false;
+            p->inside++;
+            return i;
+        }
+    }
+    return -1;
 }
 
 int main(int argc, char *argv[])
@@ -38,8 +51,9 @@ int main(int argc, char *argv[])
 
     if (c <= 0 || ta < 0 || td < 0)
         usage();
+
     struct port *p = get_port(get_shared_memory_id(), false);
-    int semid = get_semaphore_id();
+    int semid = get_semaphore_id(p->capacity);
 
     //Vérifie si le port n'est pas fermé
     bool closed = (get_semaphore_value(semid, SEM_CLOSED) != 0);
@@ -48,36 +62,48 @@ int main(int argc, char *argv[])
         ERROR("Le port est fermé! Je me casse.. Ciao");
         return EXIT_FAILURE;
     }
-    
-    //On regarde s'il y a un quai libre..
-    int quai;
-    if((quai = get_free_dock(p)) == -1) 
-    {
-        INFO("Le port est complet je dois attendre...");
-        WARN("Le port est complet");
-        set_semaphore_value(semid, SEM_SLEEP, 1);       
-    }
-    create_pnav(v, c, td, p, quai);
 
-    //tente de rentrer 
-    SEMOPS(semid,{SEM_CAPACITY,-1,0},{SEM_INSIDE,1,0}, {SEM_SLEEP,-1,0});
+    //tente de rentrer
+    SEMOPS(semid, {SEM_CAPACITY, -1, 0});
+
+    //Vérifie si le port est toujours ouvert..
+    closed = (get_semaphore_value(semid, SEM_CLOSED) != 0);
+    if (closed)
+    {
+        ERROR("Le port est fermé! Je me casse.. Ciao");
+        return EXIT_FAILURE;
+    }
+
+    int quai = get_free_dock(p);
+
     //Temps d'accostage
     INFO("Le bateau est entrain d'accoster");
-    usleep(ta);
-    INFOF("Je suis dans le port,au quai numéro: %d",p->boats[quai].number_of_dock);
-    DEBUG("bateau dans le port, il attend les camions... ");
+    usleep(ta*1000);
+    create_pnav(v, c, td, p, quai);
+    INFOF("quai num:%d",p->boats[quai].number_of_dock);
 
-    //attendre les camions pour le déchargement..
-    //set_semaphore_value(semid, SEM_SLEEP_PNAV, 1);
+    DEBUG("bateau dans le port, il attend les camions... ");
+    
+    int sem_id = get_semaphore_id(quai);
     //Commencer le déchargement...
-    INFO("Les camions sont là, Déchargement..");
+    INFO("Déchargement..");
+    int tc = 0;
     while (p->boats[quai].number_of_container > 0)
     {
-        //Temps de déchargement:
-        usleep(td);
-        p->boats[0].number_of_container--;
+        //attendre les camions pour le déchargement...
+        SEMOPS(sem_id, {SEM_DISCHARGE_NAV, -1, 0});
+        //Temps de déchargement..
+        usleep(MAX(tc, td) * 1000);
+        p->boats[quai].number_of_container--;
+        td = p->boats[quai].time_to_charge_a_container;
+        SEMOPS(sem_id, {SEM_DISCHARGE_CAM, 1, 0});
     }
-    // Sortir du port, (IPC_NOWAIT pour éviter d'éventuels hard locks)
-    SEMOPS(semid, {SEM_INSIDE, -1, IPC_NOWAIT}, {SEM_SLEEP, -1, 0});
+    INFO("Déchargement fini..");
+    // Sortir du port
+    p->boats[quai].name = '\0';
+    p->boats[quai].free = true;
+    SEMOPS(semid, {SEM_CAPACITY, 1, IPC_NOWAIT});
+    p->inside--;
     INFO("Je suis sorti du port! Ciao");
+    return 0;
 }

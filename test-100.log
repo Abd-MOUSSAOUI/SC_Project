@@ -1,0 +1,90 @@
+++ '[' -z '' ']'
+++ MARGE=0.1
++ ./pcap
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pcap 1 2
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pcap 1 2 3
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pcap a
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pcap -5
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pcap 0
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a b
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a b c
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a b c d e
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a -1 0 0
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a 0 0 0
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a 1 -1 0
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pnav a 0 0 -1
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pstop a
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pstop a b
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pfcam
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pfcam a
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pfcam a b
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pfcam a b c d
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pfcam a -1 0
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pfcam a 0 0
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pfcam a 1 -1
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pdump a
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pdump a b
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pclean a
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ ./pclean a b
++ tu
++ grep -q 'usage: ' /tmp/test-100-78854
++ logs_aux
++ set +x
+==> log aux /tmp/test-100-78854
+usage: ./pclean (ne prends aucun arg) 

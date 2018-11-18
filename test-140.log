@@ -1,0 +1,206 @@
+++ '[' -z '' ']'
+++ MARGE=0.1
++ '[' '!' -z '' ']'
++ M=roi-des-mers
++ Q=2
++ C=5
++ LISTESUFF='cap nav fcam stp'
++ lancer_test_complet 0
++ local D=0
++ DEBUG_PORT=0
++ export DEBUG_PORT
++ ./pclean
++ PIDCAP=78992
++ sleep 0.1
++ ./pcap 2
++ ps_existe 78992 'pcap pas démarré (0)'
++ kill -0 78992
++ PIDNAV=78994
++ sleep 0.1
++ ./pnav roi-des-mers 5 0 0
++ ps_existe 78994 'pnav pas démarré (0)'
++ kill -0 78994
++ ./pstop
++ sleep 0.1
++ ps_existe 78994 'pnav arrêté prématurément (0)'
++ kill -0 78994
++ ./pfcam roi-des-mers 5 0
++ sleep 0.1
++ ps_termine 78994 'navire pas arrêté (0)'
++ kill -0 78994
++ ps_termine 78992 'capitainerie pas arrêtée (0)'
++ kill -0 78992
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.cap0
+++ wc -l
++ '[' 0 -ne 0 ']'
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.nav0
+++ wc -l
++ '[' 0 -ne 0 ']'
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.fcam0
+++ wc -l
++ '[' 0 -ne 0 ']'
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.stp0
+++ wc -l
++ '[' 0 -ne 0 ']'
++ lancer_test_complet 1
++ local D=1
++ DEBUG_PORT=1
++ export DEBUG_PORT
++ ./pclean
++ PIDCAP=79009
++ sleep 0.1
++ ./pcap 2
++ ps_existe 79009 'pcap pas démarré (1)'
++ kill -0 79009
++ PIDNAV=79011
++ sleep 0.1
++ ./pnav roi-des-mers 5 0 0
++ ps_existe 79011 'pnav pas démarré (1)'
++ kill -0 79011
++ ./pstop
++ sleep 0.1
++ ps_existe 79011 'pnav arrêté prématurément (1)'
++ kill -0 79011
++ ./pfcam roi-des-mers 5 0
++ sleep 0.1
++ ps_termine 79011 'navire pas arrêté (1)'
++ kill -0 79011
++ ps_termine 79009 'capitainerie pas arrêtée (1)'
++ kill -0 79009
++ comparer 0 1
++ local s f1 f2
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.cap0
++ f2=/tmp/test-140-78988.cap1
++ cmp -s /tmp/test-140-78988.cap0 /tmp/test-140-78988.cap1
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.nav0
++ f2=/tmp/test-140-78988.nav1
++ cmp -s /tmp/test-140-78988.nav0 /tmp/test-140-78988.nav1
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.fcam0
++ f2=/tmp/test-140-78988.fcam1
++ cmp -s /tmp/test-140-78988.fcam0 /tmp/test-140-78988.fcam1
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.stp0
++ f2=/tmp/test-140-78988.stp1
++ cmp -s /tmp/test-140-78988.stp0 /tmp/test-140-78988.stp1
++ lancer_test_complet 9999
++ local D=9999
++ DEBUG_PORT=9999
++ export DEBUG_PORT
++ ./pclean
++ PIDCAP=79022
++ sleep 0.1
++ ./pcap 2
++ ps_existe 79022 'pcap pas démarré (9999)'
++ kill -0 79022
++ PIDNAV=79024
++ sleep 0.1
++ ./pnav roi-des-mers 5 0 0
++ ps_existe 79024 'pnav pas démarré (9999)'
++ kill -0 79024
++ ./pstop
++ sleep 0.1
++ ps_existe 79024 'pnav arrêté prématurément (9999)'
++ kill -0 79024
++ ./pfcam roi-des-mers 5 0
++ sleep 0.1
++ ps_termine 79024 'navire pas arrêté (9999)'
++ kill -0 79024
++ ps_termine 79022 'capitainerie pas arrêtée (9999)'
++ kill -0 79022
++ comparer 0 9999
++ local s f1 f2
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.cap0
++ f2=/tmp/test-140-78988.cap9999
++ cmp -s /tmp/test-140-78988.cap0 /tmp/test-140-78988.cap9999
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.nav0
++ f2=/tmp/test-140-78988.nav9999
++ cmp -s /tmp/test-140-78988.nav0 /tmp/test-140-78988.nav9999
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.fcam0
++ f2=/tmp/test-140-78988.fcam9999
++ cmp -s /tmp/test-140-78988.fcam0 /tmp/test-140-78988.fcam9999
++ for s in '$LISTESUFF'
++ f1=/tmp/test-140-78988.stp0
++ f2=/tmp/test-140-78988.stp9999
++ cmp -s /tmp/test-140-78988.stp0 /tmp/test-140-78988.stp9999
++ logs_aux
++ set +x
+==> log aux /tmp/test-140-78988.cap0
+==> log aux /tmp/test-140-78988.cap1
+INFO	pcap.c:68	Création de la mémoire partagée…
+DEBUG	port.c:70	shmid = 45023232
+INFO	pcap.c:70	Création de l'ensemble des sémaphores…
+DEBUG	port.c:112	semid = 32309250
+DEBUG	pcap.c:76	Création du port..
+INFO	pcap.c:77	Un port qui contient 2 quai(s) a été créé.
+DEBUG	pcap.c:20	On met SEM_CLOSED à 0
+INFO	pcap.c:21	Ouverture du port...
+DEBUG	port.c:121	semid = 94044160
+DEBUG	pcap.c:24	SEM_CLOSED = 0
+INFO	pcap.c:25	Le port est ouvert...
+INFO	pcap.c:88	Supression du port..
+INFO	pcap.c:33	Suppression du port...
+DEBUG	port.c:121	semid = 36700161
+DEBUG	port.c:121	semid = 32309250
+DEBUG	port.c:121	semid = 94044160
+INFO	pcap.c:39	Le port est supprimé! Ciao
+==> log aux /tmp/test-140-78988.cap9999
+INFO	pcap.c:68	Création de la mémoire partagée…
+DEBUG	port.c:70	shmid = 45088768
+INFO	pcap.c:70	Création de l'ensemble des sémaphores…
+DEBUG	port.c:112	semid = 32374786
+DEBUG	pcap.c:76	Création du port..
+INFO	pcap.c:77	Un port qui contient 2 quai(s) a été créé.
+DEBUG	pcap.c:20	On met SEM_CLOSED à 0
+INFO	pcap.c:21	Ouverture du port...
+DEBUG	port.c:121	semid = 94109696
+DEBUG	pcap.c:24	SEM_CLOSED = 0
+INFO	pcap.c:25	Le port est ouvert...
+INFO	pcap.c:88	Supression du port..
+INFO	pcap.c:33	Suppression du port...
+DEBUG	port.c:121	semid = 36765697
+DEBUG	port.c:121	semid = 32374786
+DEBUG	port.c:121	semid = 94109696
+INFO	pcap.c:39	Le port est supprimé! Ciao
+==> log aux /tmp/test-140-78988.fcam0
+==> log aux /tmp/test-140-78988.fcam1
+DEBUG	port.c:121	semid = 36700161
+==> log aux /tmp/test-140-78988.fcam9999
+DEBUG	port.c:121	semid = 36765697
+==> log aux /tmp/test-140-78988.nav0
+==> log aux /tmp/test-140-78988.nav1
+DEBUG	port.c:121	semid = 94044160
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:0
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 36700161
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-140-78988.nav9999
+DEBUG	port.c:121	semid = 94109696
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:0
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 36765697
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-140-78988.stp0
+==> log aux /tmp/test-140-78988.stp1
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 94044160
+INFO	pstop.c:31	Le port est fermé.
+==> log aux /tmp/test-140-78988.stp9999
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 94109696
+INFO	pstop.c:31	Le port est fermé.

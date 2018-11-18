@@ -1,0 +1,323 @@
+++ '[' -z '' ']'
+++ MARGE=0.1
++ NQUAIS=3
++ NAVIRES='a b c d e f'
++ NCONTENEURS=4
++ ./pclean
++ PIDCAP=79460
++ sleep 0.1
++ ./pcap 3
++ PIDNAV=
++ for m in '$NAVIRES'
++ PIDNAV=' 79462'
++ for m in '$NAVIRES'
++ PIDNAV=' 79462 79463'
++ for m in '$NAVIRES'
++ ./pnav a 4 0 0
++ PIDNAV=' 79462 79463 79464'
++ ./pnav b 4 0 0
++ for m in '$NAVIRES'
++ ./pnav c 4 0 0
++ PIDNAV=' 79462 79463 79464 79465'
++ for m in '$NAVIRES'
++ ./pnav d 4 0 0
++ PIDNAV=' 79462 79463 79464 79465 79466'
++ for m in '$NAVIRES'
++ ./pnav e 4 0 0
++ PIDNAV=' 79462 79463 79464 79465 79466 79467'
++ sleep 0.1
++ ./pnav f 4 0 0
++ ./pdump
+DEBUG	port.c:121	semid = 94699520
+INFO	pdump.c:29	 Nombre de quai du port: 3
+INFO	pdump.c:30	--------------
+INFO	pdump.c:34	 Capacité du port: 0
+INFO	pdump.c:35	--------------
+INFO	pdump.c:36	 Etat du port: ouvert
+INFO	pdump.c:37	--------------
+INFO	pdump.c:38	 Numéro de quai : 0
+INFO	pdump.c:39	--------------
+INFO	pdump.c:40	 Nom du Navire: a
+INFO	pdump.c:41	--------------
+INFO	pdump.c:42	 État du navire: en attente
+INFO	pdump.c:43	--------------
+INFO	pdump.c:44	 Nbr de conteneur: 4
+INFO	pdump.c:34	 Capacité du port: 0
+INFO	pdump.c:35	--------------
+INFO	pdump.c:36	 Etat du port: ouvert
+INFO	pdump.c:37	--------------
+INFO	pdump.c:38	 Numéro de quai : 1
+INFO	pdump.c:39	--------------
+INFO	pdump.c:40	 Nom du Navire: b
+INFO	pdump.c:41	--------------
+INFO	pdump.c:42	 État du navire: en attente
+INFO	pdump.c:43	--------------
+INFO	pdump.c:44	 Nbr de conteneur: 4
+INFO	pdump.c:34	 Capacité du port: 0
+INFO	pdump.c:35	--------------
+INFO	pdump.c:36	 Etat du port: ouvert
+INFO	pdump.c:37	--------------
+INFO	pdump.c:38	 Numéro de quai : 2
+INFO	pdump.c:39	--------------
+INFO	pdump.c:40	 Nom du Navire: d
+INFO	pdump.c:41	--------------
+INFO	pdump.c:42	 État du navire: en attente
+INFO	pdump.c:43	--------------
+INFO	pdump.c:44	 Nbr de conteneur: 4
++ PIDCAM=
++ for m in '$NAVIRES'
++ PIDCAM=' 79470'
++ for m in '$NAVIRES'
++ PIDCAM=' 79470 79471'
++ for m in '$NAVIRES'
++ ./pfcam a 2 0
++ ./pfcam b 2 0
++ PIDCAM=' 79470 79471 79472'
++ for m in '$NAVIRES'
++ ./pfcam c 2 0
++ PIDCAM=' 79470 79471 79472 79473'
++ for m in '$NAVIRES'
++ ./pfcam d 2 0
++ PIDCAM=' 79470 79471 79472 79473 79474'
++ for m in '$NAVIRES'
++ ./pfcam e 2 0
++ PIDCAM=' 79470 79471 79472 79473 79474 79475'
++ sleep 0.1
++ ./pfcam f 2 0
++ for pid in '$PIDCAM'
++ ps_termine 79470 'camion 79470 non terminé'
++ kill -0 79470
++ for pid in '$PIDCAM'
++ ps_termine 79471 'camion 79471 non terminé'
++ kill -0 79471
++ for pid in '$PIDCAM'
++ ps_termine 79472 'camion 79472 non terminé'
++ kill -0 79472
++ for pid in '$PIDCAM'
++ ps_termine 79473 'camion 79473 non terminé'
++ kill -0 79473
++ for pid in '$PIDCAM'
++ ps_termine 79474 'camion 79474 non terminé'
++ kill -0 79474
++ for pid in '$PIDCAM'
++ ps_termine 79475 'camion 79475 non terminé'
++ kill -0 79475
++ for pid in '$PIDNAV'
++ ps_existe 79462 'navire 79462 terminé avant pstop'
++ kill -0 79462
++ for pid in '$PIDNAV'
++ ps_existe 79463 'navire 79463 terminé avant pstop'
++ kill -0 79463
++ for pid in '$PIDNAV'
++ ps_existe 79464 'navire 79464 terminé avant pstop'
++ kill -0 79464
++ for pid in '$PIDNAV'
++ ps_existe 79465 'navire 79465 terminé avant pstop'
++ kill -0 79465
++ for pid in '$PIDNAV'
++ ps_existe 79466 'navire 79466 terminé avant pstop'
++ kill -0 79466
++ for pid in '$PIDNAV'
++ ps_existe 79467 'navire 79467 terminé avant pstop'
++ kill -0 79467
++ ./pstop
++ sleep 0.1
++ ./pdump
+DEBUG	port.c:121	semid = 94699520
+INFO	pdump.c:29	 Nombre de quai du port: 3
+INFO	pdump.c:30	--------------
+INFO	pdump.c:34	 Capacité du port: 0
+INFO	pdump.c:35	--------------
+INFO	pdump.c:36	 Etat du port: fermé
+INFO	pdump.c:37	--------------
+INFO	pdump.c:38	 Numéro de quai : 0
+INFO	pdump.c:39	--------------
+INFO	pdump.c:40	 Nom du Navire: a
+INFO	pdump.c:41	--------------
+INFO	pdump.c:42	 État du navire: en attente
+INFO	pdump.c:43	--------------
+INFO	pdump.c:44	 Nbr de conteneur: 2
+INFO	pdump.c:34	 Capacité du port: 0
+INFO	pdump.c:35	--------------
+INFO	pdump.c:36	 Etat du port: fermé
+INFO	pdump.c:37	--------------
+INFO	pdump.c:38	 Numéro de quai : 1
+INFO	pdump.c:39	--------------
+INFO	pdump.c:40	 Nom du Navire: b
+INFO	pdump.c:41	--------------
+INFO	pdump.c:42	 État du navire: en attente
+INFO	pdump.c:43	--------------
+INFO	pdump.c:44	 Nbr de conteneur: 2
+INFO	pdump.c:34	 Capacité du port: 0
+INFO	pdump.c:35	--------------
+INFO	pdump.c:36	 Etat du port: fermé
+INFO	pdump.c:37	--------------
+INFO	pdump.c:38	 Numéro de quai : 2
+INFO	pdump.c:39	--------------
+INFO	pdump.c:40	 Nom du Navire: d
+INFO	pdump.c:41	--------------
+INFO	pdump.c:42	 État du navire: en attente
+INFO	pdump.c:43	--------------
+INFO	pdump.c:44	 Nbr de conteneur: 2
++ AQUAI=
++ for pid in '$PIDNAV'
++ ps_test 79462
++ kill -0 79462
++ AQUAI=' 79462'
++ for pid in '$PIDNAV'
++ ps_test 79463
++ kill -0 79463
++ AQUAI=' 79462 79463'
++ for pid in '$PIDNAV'
++ ps_test 79464
++ kill -0 79464
++ for pid in '$PIDNAV'
++ ps_test 79465
++ kill -0 79465
++ AQUAI=' 79462 79463 79465'
++ for pid in '$PIDNAV'
++ ps_test 79466
++ kill -0 79466
++ for pid in '$PIDNAV'
++ ps_test 79467
++ kill -0 79467
+++ echo 79462 79463 79465
+++ wc -w
++ test 3 = 3
++ PIDCAM=
++ for m in '$NAVIRES'
++ PIDCAM=' 79483'
++ for m in '$NAVIRES'
++ PIDCAM=' 79483 79484'
++ for m in '$NAVIRES'
++ ./pfcam a 2 0
++ PIDCAM=' 79483 79484 79485'
++ ./pfcam b 2 0
++ for m in '$NAVIRES'
++ ./pfcam c 2 0
++ PIDCAM=' 79483 79484 79485 79486'
++ for m in '$NAVIRES'
++ ./pfcam d 2 0
++ PIDCAM=' 79483 79484 79485 79486 79487'
++ ./pfcam e 2 0
++ for m in '$NAVIRES'
++ PIDCAM=' 79483 79484 79485 79486 79487 79488'
++ sleep 0.1
++ ./pfcam f 2 0
++ for pid in '$PIDCAM'
++ ps_termine 79483 'camion 79483 non terminé à la fin'
++ kill -0 79483
++ for pid in '$PIDCAM'
++ ps_termine 79484 'camion 79484 non terminé à la fin'
++ kill -0 79484
++ for pid in '$PIDCAM'
++ ps_termine 79485 'camion 79485 non terminé à la fin'
++ kill -0 79485
++ for pid in '$PIDCAM'
++ ps_termine 79486 'camion 79486 non terminé à la fin'
++ kill -0 79486
++ for pid in '$PIDCAM'
++ ps_termine 79487 'camion 79487 non terminé à la fin'
++ kill -0 79487
++ for pid in '$PIDCAM'
++ ps_termine 79488 'camion 79488 non terminé à la fin'
++ kill -0 79488
++ for pid in '$AQUAI'
++ ps_termine 79462 'navire 79462 non terminé à la fin'
++ kill -0 79462
++ for pid in '$AQUAI'
++ ps_termine 79463 'navire 79463 non terminé à la fin'
++ kill -0 79463
++ for pid in '$AQUAI'
++ ps_termine 79465 'navire 79465 non terminé à la fin'
++ kill -0 79465
++ ps_termine 79460 'pcap non terminé'
++ kill -0 79460
++ logs_aux
++ set +x
+==> log aux /tmp/test-190-79456.cam1a
+DEBUG	port.c:121	semid = 37355521
+==> log aux /tmp/test-190-79456.cam1b
+DEBUG	port.c:121	semid = 32833538
+==> log aux /tmp/test-190-79456.cam1c
+ERROR	pfcam.c:47	Le navire n'est pas à quai ! je me casse.. Ciao
+==> log aux /tmp/test-190-79456.cam1d
+DEBUG	port.c:121	semid = 18677763
+==> log aux /tmp/test-190-79456.cam1e
+ERROR	pfcam.c:47	Le navire n'est pas à quai ! je me casse.. Ciao
+==> log aux /tmp/test-190-79456.cam1f
+ERROR	pfcam.c:47	Le navire n'est pas à quai ! je me casse.. Ciao
+==> log aux /tmp/test-190-79456.cam2a
+DEBUG	port.c:121	semid = 37355521
+==> log aux /tmp/test-190-79456.cam2b
+DEBUG	port.c:121	semid = 32833538
+==> log aux /tmp/test-190-79456.cam2c
+ERROR	pfcam.c:47	Le navire n'est pas à quai ! je me casse.. Ciao
+==> log aux /tmp/test-190-79456.cam2d
+DEBUG	port.c:121	semid = 18677763
+semop: Identifier removed
+==> log aux /tmp/test-190-79456.cam2e
+shmat: Invalid argument
+==> log aux /tmp/test-190-79456.cam2f
+shmat: Invalid argument
+==> log aux /tmp/test-190-79456.cap
+INFO	pcap.c:68	Création de la mémoire partagée…
+DEBUG	port.c:70	shmid = 45678592
+INFO	pcap.c:70	Création de l'ensemble des sémaphores…
+DEBUG	port.c:112	semid = 18677763
+DEBUG	pcap.c:76	Création du port..
+INFO	pcap.c:77	Un port qui contient 3 quai(s) a été créé.
+DEBUG	pcap.c:20	On met SEM_CLOSED à 0
+INFO	pcap.c:21	Ouverture du port...
+DEBUG	port.c:121	semid = 94699520
+DEBUG	pcap.c:24	SEM_CLOSED = 0
+INFO	pcap.c:25	Le port est ouvert...
+INFO	pcap.c:88	Supression du port..
+INFO	pcap.c:33	Suppression du port...
+DEBUG	port.c:121	semid = 37355521
+DEBUG	port.c:121	semid = 32833538
+DEBUG	port.c:121	semid = 18677763
+DEBUG	port.c:121	semid = 94699520
+INFO	pcap.c:39	Le port est supprimé! Ciao
+==> log aux /tmp/test-190-79456.dmp1
+==> log aux /tmp/test-190-79456.dmp2
+==> log aux /tmp/test-190-79456.nava
+DEBUG	port.c:121	semid = 94699520
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:0
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 37355521
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-190-79456.navb
+DEBUG	port.c:121	semid = 94699520
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:1
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 32833538
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-190-79456.navc
+DEBUG	port.c:121	semid = 94699520
+ERROR	pnav.c:73	Le port est fermé! Je me casse.. Ciao
+==> log aux /tmp/test-190-79456.navd
+DEBUG	port.c:121	semid = 94699520
+INFO	pnav.c:80	Le bateau est entrain d'accoster
+INFO	pnav.c:83	quai num:2
+DEBUG	pnav.c:85	bateau dans le port, il attend les camions... 
+DEBUG	port.c:121	semid = 18677763
+INFO	pnav.c:89	Déchargement..
+INFO	pnav.c:101	Déchargement fini..
+INFO	pnav.c:107	Je suis sorti du port! Ciao
+==> log aux /tmp/test-190-79456.nave
+DEBUG	port.c:121	semid = 94699520
+ERROR	pnav.c:73	Le port est fermé! Je me casse.. Ciao
+==> log aux /tmp/test-190-79456.navf
+DEBUG	port.c:121	semid = 94699520
+ERROR	pnav.c:73	Le port est fermé! Je me casse.. Ciao
+==> log aux /tmp/test-190-79456.stp
+INFO	pstop.c:19	Fermeture du port..
+DEBUG	port.c:121	semid = 94699520
+INFO	pstop.c:31	Le port est fermé.

@@ -14,6 +14,17 @@ noreturn void usage(void)
     exit(EXIT_FAILURE);
 }
 
+int get_number_of_dock(struct port *p, char v)
+{
+    int i;
+    for (i = 0; i < p->capacity; i++)
+        {
+        if (p->boats[i].name == v)
+            return p->boats[i].number_of_dock;
+        }
+    return -1;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -27,17 +38,27 @@ int main(int argc, char *argv[])
     tc = atoi(argv[3]);
     if (c <= 0 || tc <0 )
         usage();
-    struct port *p = get_port(get_shared_memory_id(), true);
-    semid = get_semaphore_id();
-    if( p->boats->name != v)
+
+    struct port *p = get_port(get_shared_memory_id(), false);
+
+    int quai;
+    if ((quai = get_number_of_dock(p, v)) == -1)
     {
-        WARN("Appelle a pfcam avant que pnav est a quais..");
-        ERROR("Le navire n'est pas à quai! je me casse.. Ciao");
+        ERROR("Le navire n'est pas à quai ! je me casse.. Ciao");
         return EXIT_FAILURE;
     }
-    if (p->boats->name == v)
+    semid = get_semaphore_id(quai);
+
+    int td=0;
+    while (c > 0 && p->boats[quai].number_of_container > 0)
     {
-        //Demander le numéro de quai du navire concerné
-        //SEMOPS(semid, {SEM_SLEEP, -1, 0});
+        //Demander un conteneur
+        SEMOPS(semid, {SEM_DISCHARGE_NAV, 1, 0});
+        p->boats[quai].time_to_charge_a_container = tc;
+        usleep(MAX(tc,td) * 1000);
+        c--;
+        td = p->boats[quai].time_to_discharge_a_container;
+        SEMOPS(semid, {SEM_DISCHARGE_CAM, -1, 0});
     }
+    return 0;
 }
